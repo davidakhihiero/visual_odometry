@@ -8,6 +8,7 @@ Panels:
         - /Status1
         - /PointCloud21
         - /Camera1
+        - /Pose1
       Splitter Ratio: 0.5
     Tree Height: 418
   - Class: rviz/Selection
@@ -94,8 +95,25 @@ Visualization Manager:
       Visibility:
         Grid: true
         PointCloud2: false
+        Pose: false
         Value: true
       Zoom Factor: 1
+    - Alpha: 1
+      Axes Length: 1
+      Axes Radius: 0.10000000149011612
+      Class: rviz/Pose
+      Color: 255; 25; 0
+      Enabled: true
+      Head Length: 0.30000001192092896
+      Head Radius: 0.10000000149011612
+      Name: Pose
+      Queue Size: 10
+      Shaft Length: 1
+      Shaft Radius: 0.05000000074505806
+      Shape: Axes
+      Topic: /pose_topic
+      Unreliable: false
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -124,7 +142,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 13.418017387390137
+      Distance: 11.470237731933594
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -140,9 +158,9 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.2603986859321594
+      Pitch: 0.3503986895084381
       Target Frame: <Fixed Frame>
-      Yaw: 1.7154074907302856
+      Yaw: 2.480412483215332
     Saved: ~
 Window Geometry:
   Camera:
