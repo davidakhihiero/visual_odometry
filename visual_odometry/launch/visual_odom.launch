@@ -1,0 +1,10 @@
+<launch>
+    <param name="use_sim_time" value="true" />
+
+    <!-- Node to convert RGB-D to PointCloud -->
+    <node pkg="visual_odometry" type="depth_image_to_pointcloud.py" name="rgbd_to_pointcloud_node" output="screen">
+    </node>
+
+    <!-- Start RViz -->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find visual_odometry)/config/rviz_config.rviz" />
+</launch>

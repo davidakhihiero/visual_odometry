@@ -1,0 +1,37 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/davidakhihiero/badger_ws/devel/include/**",
+        "/home/davidakhihiero/ws_livox/devel/include/**",
+        "/home/davidakhihiero/catkin_ws/devel/include/**",
+        "/opt/ros/noetic/include/**",
+        "/home/davidakhihiero/badger_ws/src/tunnel-drone-localization/drone_localization/include/**",
+        "/home/davidakhihiero/badger_ws/src/husky_badger/FAST_LIO/include/**",
+        "/home/davidakhihiero/badger_ws/src/husky_badger/FAST_LIO_LOCALIZATION/include/**",
+        "/home/davidakhihiero/badger_ws/src/husky_badger/hw_interface/include/**",
+        "/home/davidakhihiero/badger_ws/src/husky_badger/hw_interface_plugin_adis_imu/include/**",
+        "/home/davidakhihiero/badger_ws/src/husky_badger/move_badger/include/**",
+        "/home/davidakhihiero/badger_ws/src/husky_badger/pointcloud_to_laserscan/include/**",
+        "/home/davidakhihiero/catkin_ws/src/tare_planner/src/tare_planner/include/**",
+        "/home/davidakhihiero/autonomous_exploration_development_environment/src/velodyne_simulator/velodyne_gazebo_plugins/include/**",
+        "/home/davidakhihiero/visual_odom_ws/src/visual_odometry/include/**",
+        "/home/davidakhihiero/autonomous_exploration_development_environment/src/waypoint_rviz_plugin/include/**",
+        "/home/davidakhihiero/catkin_ws/src/x/include/**",
+        "/home/davidakhihiero/catkin_ws/src/x_multi_agent_ros/include/**",
+        "/home/davidakhihiero/catkin_ws/src/x_vio_ros/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}
