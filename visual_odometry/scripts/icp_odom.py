@@ -16,6 +16,7 @@ pose_pub = None
 def cloud_callback(msg):
     global last_cloud, last_pose
 
+    voxel_size = 0.05
     T = None
     if last_cloud == None:
         last_pose = np.array(initial_pose)
@@ -31,7 +32,7 @@ def cloud_callback(msg):
 
         last_cloud = o3d.geometry.PointCloud()
         last_cloud.points = o3d.utility.Vector3dVector(pc_points)
-        last_cloud = current_cloud.voxel_down_sample(voxel_size=0.05)  
+        last_cloud = last_cloud.voxel_down_sample(voxel_size=voxel_size)  
     else:
         pc = pc2.read_points(msg, field_names=("x", "y", "z"), skip_nans=True)
         
@@ -45,13 +46,15 @@ def cloud_callback(msg):
 
         current_cloud = o3d.geometry.PointCloud()
         current_cloud.points = o3d.utility.Vector3dVector(pc_points)
-        current_cloud = current_cloud.voxel_down_sample(voxel_size=0.05)  
+        current_cloud = current_cloud.voxel_down_sample(voxel_size=voxel_size)  
 
         # Perform registration using ICP
-        threshold = 0.05
+        current_cloud.estimate_normals(search_param=o3d.geometry.KDTreeSearchParamHybrid(radius=0.1, max_nn=30))
+
+        threshold = 0.02
         T = o3d.pipelines.registration.registration_icp(
             last_cloud, current_cloud, threshold, np.eye(4),
-            o3d.pipelines.registration.TransformationEstimationPointToPoint()
+            o3d.pipelines.registration.TransformationEstimationPointToPlane()
         )
 
         last_pose = np.dot(T.transformation, last_pose)
@@ -80,8 +83,26 @@ def cloud_callback(msg):
 
 
 if __name__ == '__main__':
+    # translation: 
+    #     x: -3.0454221847459277
+    #     y: -0.08056010217775714
+    #     z: 0.18427528415090083
+    # rotation: 
+    #     x: 0.008072461353199337
+    #     y: -0.010573090757896622
+    #     z: -0.36845680178307755
+    #     w: 0.9295496922377589
+
     rospy.init_node('icp_odom')
-    pose_pub = rospy.Publisher('/pose_topic', PoseStamped, queue_size=10)
+    initial_q = [0.008072461353199337, -0.010573090757896622, -0.36845680178307755, 0.9295496922377589] # x y z w
+    initial_rot_matrix = quaternion_matrix(initial_q)
+
+    initial_pose[0:3, 0:3] = initial_rot_matrix[0:3, 0:3]
+    initial_pose[0, 3] = -3.0454221847459277
+    initial_pose[1, 3] = -0.08056010217775714
+    initial_pose[2, 3] = 0.18427528415090083
+
+    pose_pub = rospy.Publisher('/pose_topic', PoseStamped, queue_size=1000)
     depth_sub = rospy.Subscriber('/camera/pointcloud', PointCloud2, cloud_callback)
     rospy.spin()
 

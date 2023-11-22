@@ -6,6 +6,7 @@ from cv_bridge import CvBridge
 import numpy as np
 import sensor_msgs.point_cloud2 as pc2
 
+
 class RGBDepthToPointcloud:
     def __init__(self):
         rospy.init_node('rgbd_to_pointcloud')
@@ -18,7 +19,7 @@ class RGBDepthToPointcloud:
         self.rgb_info_sub = rospy.Subscriber('/l515/color/camera_info', CameraInfo, self.rgb_info_callback)
         self.depth_info_sub = rospy.Subscriber('/l515/depth/camera_info', CameraInfo, self.depth_info_callback)
 
-        self.pointcloud_publisher = rospy.Publisher('/camera/pointcloud', PointCloud2, queue_size=10)
+        self.pointcloud_publisher = rospy.Publisher('/camera/pointcloud', PointCloud2, queue_size=1)
 
         self.rgb_info = None
         self.depth_info = None
