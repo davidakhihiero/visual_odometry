@@ -19,11 +19,11 @@ last_time = None
 def cloud_callback(msg):
     global last_cloud, last_pose, last_time, difference
 
-    if last_time is not None and time.time() - last_time < 0:
-        return
+    # if last_time is not None and time.time() - last_time < 1:
+    #     return
     
     last_time = time.time()
-    voxel_size = 0.1
+    voxel_size = 0.05
     downsample = True
     T = None
     if last_cloud == None:
@@ -59,7 +59,7 @@ def cloud_callback(msg):
             current_cloud = current_cloud.voxel_down_sample(voxel_size=voxel_size)  
 
         # Perform registration using ICP
-        current_cloud.estimate_normals(search_param=o3d.geometry.KDTreeSearchParamHybrid(radius=0.1, max_nn=30))
+        current_cloud.estimate_normals(search_param=o3d.geometry.KDTreeSearchParamHybrid(radius=0.05, max_nn=30))
 
         threshold = 0.05
         T = o3d.pipelines.registration.registration_icp(
@@ -68,7 +68,7 @@ def cloud_callback(msg):
             # o3d.pipelines.registration.ICPConvergenceCriteria(max_iteration=2000)
         )
         
-        if np.linalg.norm(np.dot(np.linalg.inv(T.transformation), difference)) < 3:
+        if np.linalg.norm(np.dot(np.linalg.inv(T.transformation), difference)) < 2.2:
             transformation = T.transformation
         else:
             transformation = np.array(difference)
