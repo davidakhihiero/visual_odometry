@@ -19,6 +19,11 @@ class RGBDepthToPointcloud:
         self.rgb_info_sub = rospy.Subscriber('/l515/color/camera_info', CameraInfo, self.rgb_info_callback)
         self.depth_info_sub = rospy.Subscriber('/l515/depth/camera_info', CameraInfo, self.depth_info_callback)
 
+        # self.rgb_sub = rospy.Subscriber('/tesse/left_cam/rgb/image_raw', Image, self.rgb_callback)
+        # self.depth_sub = rospy.Subscriber('/tesse/depth_cam/mono/image_raw', Image, self.depth_callback)
+        # self.rgb_info_sub = rospy.Subscriber('/tesse/left_cam/camera_info', CameraInfo, self.rgb_info_callback)
+        # self.depth_info_sub = rospy.Subscriber('/tesse/depth_cam/camera_info', CameraInfo, self.depth_info_callback)
+
         self.pointcloud_publisher = rospy.Publisher('/camera/pointcloud', PointCloud2, queue_size=1)
 
         self.rgb_info = None
@@ -62,6 +67,8 @@ class RGBDepthToPointcloud:
         # Create point cloud
         points = np.vstack((x.flatten(), y.flatten(), z.flatten())).T
         header = msg.header
+        # header.stamp = rospy.Time()
+        # header.frame_id = "world"
         pointcloud_msg = pc2.create_cloud_xyz32(header, points)
 
         # Publish the PointCloud2 message
