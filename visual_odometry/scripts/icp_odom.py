@@ -23,7 +23,7 @@ orientation = [0, 0, 0]
 position = [0, 0, 0]  
 velocity = [0, 0, 0]
 
-gravity = np.array([0.0, 0.0, 0])
+gravity = np.array([0.0, 0.0, 0.0])
 initialized = False
 
 def cloud_callback(msg):
@@ -36,7 +36,7 @@ def cloud_callback(msg):
     if last_time is None:
         last_time = time.time()
 
-    voxel_size = 0.05
+    voxel_size = 0.1
     downsample = True
     T = None
     if last_cloud == None:
@@ -80,7 +80,7 @@ def cloud_callback(msg):
         T = o3d.pipelines.registration.registration_icp(
             last_cloud, current_cloud, threshold, init_transform,
             o3d.pipelines.registration.TransformationEstimationPointToPlane(),
-            # o3d.pipelines.registration.ICPConvergenceCriteria(max_iteration=2000)
+           # o3d.pipelines.registration.ICPConvergenceCriteria(max_iteration=2000)
         )
 
         # print(np.linalg.norm(np.dot(np.linalg.inv(T.transformation), init_transform)))
@@ -168,8 +168,8 @@ def imu_callback(msg):
         last_imu_time = msg.header.stamp.to_sec()
     else:
         dt = msg.header.stamp.to_sec() - last_imu_time
-        if dt < 0.1:
-            return
+        # if dt < 0.1:
+        #     return
         last_imu_time = msg.header.stamp.to_sec()
 
     update_orientation(msg, dt)
