@@ -36,7 +36,7 @@ def cloud_callback(msg):
     if last_time is None:
         last_time = time.time()
 
-    voxel_size = 0.1
+    voxel_size = 0.05
     downsample = True
     T = None
     if last_cloud == None:
@@ -78,7 +78,7 @@ def cloud_callback(msg):
         init_transform = get_init_transform()
         threshold = 0.05
         T = o3d.pipelines.registration.registration_icp(
-            last_cloud, current_cloud, threshold, init_transform,
+            last_cloud, current_cloud, threshold, np.eye(4),
             o3d.pipelines.registration.TransformationEstimationPointToPlane(),
            # o3d.pipelines.registration.ICPConvergenceCriteria(max_iteration=2000)
         )

@@ -1,6 +1,6 @@
 clear; clc; close all;
 
-path = "C:\Users\david\Downloads\result_vio_2.bag";
+path = "/home/David/result_vo.bag";
 bag = rosbag(path);
 
 VOPoseBag = select(bag, 'Topic', '/pose_topic');
